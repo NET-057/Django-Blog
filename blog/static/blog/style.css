@@ -1,0 +1,13 @@
+body {
+    background: white url("images/background.png");
+}
+
+.navbar
+{
+ border-radius:0 !important;
+ font-family:arial;
+
+}
+.nav-brand{
+    font-family: cursive;
+}

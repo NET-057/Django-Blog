@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{%block form_search%}
+<div class="form-group">
+                    <input type="search" class="form-control" name="q" value="">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+{%endblock%}
+{% block body%}
+<div class='container'>
+	<div class="row">
+		<div class="col-sm-12 col-md-8">
+
+	<h1> My All Blog</h1>
+    {% for blog in object_list %}
+	<div class="col-sm-12 col-md-12">
+        <div class="thumbnail">
+       <div class="caption">
+        {% if blog.image%}
+        <img class='img-responsive' src="{{blog.image.url}}" /><br>
+        {%endif%}
+        <h3 ><a href="{{blog.id}}" >{{blog.title}} </a><small style="font-size:14px">Updated {{ blog.timestamp|timesince }}</small></h3>
+         <p>{{blog.content|truncatechars:300}}</p>
+
+         <p><a href="{{blog.id}}" class="btn btn-primary" role="button">View</a>   <a href="{{blog.id}}/edit" class="btn btn-success" role="button">Update</a> <a href="delete/{{blog.id}}" class="btn btn-danger" role="button">Delete</a>  </p>
+
+	  </div>
+	</div>
+    </div>
+
+	{%endfor%}
+    
+    <div class="pagination">
+    <span class="step-links">
+        {% if object_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{%endif%}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+        </span>
+
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{%endif%}">next</a>
+            <a href="?page={{ object_list.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q}}{%endif%}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+	</div>
+</div>
+</div>
+{%endblock%}
